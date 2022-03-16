@@ -1,0 +1,141 @@
+From f91aa47da756f020f02ce8db7dfc08aa52039d2b Mon Sep 17 00:00:00 2001
+From: Timo Aaltonen <tjaalton@debian.org>
+Date: Sat, 8 May 2021 22:42:51 +0300
+Subject: [PATCH] Revert "meson: use library() instead of shared_library()."
+
+This reverts commit 52f05d3d896480ee5431dcd444f53bb2a8e41cce.
+---
+ amdgpu/meson.build    | 2 +-
+ etnaviv/meson.build   | 2 +-
+ exynos/meson.build    | 2 +-
+ freedreno/meson.build | 2 +-
+ intel/meson.build     | 2 +-
+ libkms/meson.build    | 2 +-
+ meson.build           | 2 +-
+ nouveau/meson.build   | 2 +-
+ omap/meson.build      | 2 +-
+ radeon/meson.build    | 2 +-
+ tegra/meson.build     | 2 +-
+ 11 files changed, 11 insertions(+), 11 deletions(-)
+
+--- a/amdgpu/meson.build
++++ b/amdgpu/meson.build
+@@ -21,7 +21,7 @@
+ 
+ datadir_amdgpu = join_paths(get_option('prefix'), get_option('datadir'), 'libdrm')
+ 
+-libdrm_amdgpu = library(
++libdrm_amdgpu = shared_library(
+   'drm_amdgpu',
+   [
+     files(
+--- a/etnaviv/meson.build
++++ b/etnaviv/meson.build
+@@ -19,7 +19,7 @@
+ # SOFTWARE.
+ 
+ 
+-libdrm_etnaviv = library(
++libdrm_etnaviv = shared_library(
+   'drm_etnaviv',
+   [
+     files(
+--- a/exynos/meson.build
++++ b/exynos/meson.build
+@@ -18,7 +18,7 @@
+ # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ # SOFTWARE.
+ 
+-libdrm_exynos = library(
++libdrm_exynos = shared_library(
+   'drm_exynos',
+   [files('exynos_drm.c', 'exynos_fimg2d.c'), config_file],
+   c_args : libdrm_c_args,
+--- a/freedreno/meson.build
++++ b/freedreno/meson.build
+@@ -39,7 +39,7 @@ if with_freedreno_kgsl
+   )
+ endif
+ 
+-libdrm_freedreno = library(
++libdrm_freedreno = shared_library(
+   'drm_freedreno',
+   [files_freedreno, config_file],
+   c_args : libdrm_c_args,
+--- a/intel/meson.build
++++ b/intel/meson.build
+@@ -18,7 +18,7 @@
+ # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ # SOFTWARE.
+ 
+-libdrm_intel = library(
++libdrm_intel = shared_library(
+   'drm_intel',
+   [
+     files(
+--- a/libkms/meson.build
++++ b/libkms/meson.build
+@@ -41,7 +41,7 @@ if with_exynos
+   libkms_include += include_directories('../exynos')
+ endif
+ 
+-libkms = library(
++libkms = shared_library(
+   'kms',
+   [files_libkms, config_file],
+   c_args : libdrm_c_args,
+--- a/meson.build
++++ b/meson.build
+@@ -312,7 +312,7 @@ else
+   libdrm_kw = {'version' : '2.4.0'}
+ endif
+ 
+-libdrm = library(
++libdrm = shared_library(
+   'drm',
+   libdrm_files,
+   c_args : libdrm_c_args,
+--- a/nouveau/meson.build
++++ b/nouveau/meson.build
+@@ -19,7 +19,7 @@
+ # SOFTWARE.
+ 
+ 
+-libdrm_nouveau = library(
++libdrm_nouveau = shared_library(
+   'drm_nouveau',
+   [files( 'nouveau.c', 'pushbuf.c', 'bufctx.c', 'abi16.c'), config_file],
+   c_args : libdrm_c_args,
+--- a/omap/meson.build
++++ b/omap/meson.build
+@@ -18,7 +18,7 @@
+ # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ # SOFTWARE.
+ 
+-libdrm_omap = library(
++libdrm_omap = shared_library(
+   'drm_omap',
+   [files('omap_drm.c'), config_file],
+   include_directories : [inc_root, inc_drm],
+--- a/radeon/meson.build
++++ b/radeon/meson.build
+@@ -19,7 +19,7 @@
+ # SOFTWARE.
+ 
+ 
+-libdrm_radeon = library(
++libdrm_radeon = shared_library(
+   'drm_radeon',
+   [
+     files(
+--- a/tegra/meson.build
++++ b/tegra/meson.build
+@@ -18,7 +18,7 @@
+ # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ # SOFTWARE.
+ 
+-libdrm_tegra = library(
++libdrm_tegra = shared_library(
+   'drm_tegra',
+   [files('tegra.c'), config_file],
+   include_directories : [inc_root, inc_drm],
